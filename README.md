@@ -10,6 +10,25 @@ This MCP enables Claude to access 70,000+ borehole records from the BGS database
 - **Engineering ground assessments**  
 - **Academic research** at universities like Edinburgh
 
+## One-Click Installer for VS Code
+
+1. Click to Install to VS Code
+
+[![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_AGS_Boreholes_OGC_API_--_MCP_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=ffffff)](vscode:mcp/install?%7B%22name%22%3A%22AGS%20Boreholes%20OGC%20API%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fags-boreholes-ogc-api.fastmcp.app%2Fmcp%22%7D)
+
+2. Open VS Code and toggle Co-Pilot on
+3. Switch to Agent Mode
+4. (optional) Check if you're connected to the MCP
+5. Start asking questions. If you want the data to be visualised or captured somewhere ask AI to create an HTML file, jupyter notebook, or store the data in CSV file.
+
+## Usage Examples
+
+Ask LLM:
+- *"Check if the BGS Boreholes MCP service is working"*
+- *"Find boreholes near Edinburgh and summarize their depths"*
+- *"Search for deep boreholes around Manchester that might have reached bedrock"*
+- *"What geological drilling data is available in the Thames Valley?"*
+
 ## ✨ Features
 
 ### Available Tools
@@ -43,10 +62,9 @@ pip install -e .
 
 ### 2. Configuration
 
-#### Claude Desktop (stdio mode)
+#### MCP Clients (stdio mode)
 
-Add to your `claude_desktop_config.json`:
-
+**Option A: Direct Python (requires pre-installed dependencies)**
 ```json
 {
   "mcpServers": {
@@ -59,27 +77,40 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
+**Option B: Using uv (recommended - handles dependencies automatically)**
+```json
+{
+  "mcpServers": {
+    "AGS Boreholes API": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "fastmcp",
+        "--with",
+        "requests",
+        "python",
+        "/path/to/AGS-boreholes-mcp/server/main.py",
+        "--stdio"
+      ],
+      "transport": "stdio"
+    }
+  }
+}
+```
+
 #### Web/HTTP Mode
 
 ```bash
-# Run HTTP server (default mode)
+# Direct Python (requires dependencies)
 python server/main.py
+
+# Using uv (installs dependencies automatically)
+uv run --with fastmcp --with requests python server/main.py
 
 # Access via: http://127.0.0.1:8080/mcp
 ```
 
-Perfect for:
-- **Cloudflare Tunnel** integration
-- **Web development** and testing
-- **Remote access** to geological data
-
-### 3. Usage Examples
-
-Ask Claude:
-- *"Find boreholes near Edinburgh and summarize their depths"*
-- *"Search for deep boreholes around Manchester that might have reached bedrock"*
-- *"What geological drilling data is available in the Thames Valley?"*
-- *"Check if the BGS service is working"*
 
 ## 🔍 Bedrock Depth Analysis
 
@@ -116,12 +147,6 @@ For bedrock analysis:
 - **✅ Coordinate Conversion**: Automatic BNG to WGS84 transformation
 - **✅ Distance Calculations**: Shows proximity to search points
 - **✅ Service Health**: Built-in API status monitoring
-
-### Code Quality
-- **Clean Architecture**: Separated concerns with helper functions  
-- **Type Safety**: Full type hints for better IDE support
-- **Documentation**: Comprehensive docstrings and examples
-- **Zero Dependencies**: Only essential libraries (fastmcp, requests)
 
 ## 📡 Data Source
 
@@ -171,16 +196,6 @@ python server/main.py
 cloudflared tunnel --url http://127.0.0.1:8080/mcp
 ```
 
-## 📞 Support
-
-- **BGS Enquiries**: enquiries@bgs.ac.uk
-- **API Issues**: Check service status with `check_bgs_service_status()`
-- **Data Questions**: Refer to BGS data documentation
-
-## 📄 License
-
-This project provides an interface to BGS data. Please respect BGS data licensing terms and copyright notices when using geological data for research or commercial applications.
-
 ---
 
-**Version**: 2.0.0 | **Author**: Claude Code | **Updated**: 2025-08-14
+**Version**: 2.0.0 | **Updated**: 2025-08-14
