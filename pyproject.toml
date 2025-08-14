@@ -1,0 +1,13 @@
+[project]
+name = "ags-boreholes-api-mcp"
+version = "2.0.0"
+description = "MCP server for querying AGS Borehole data from BGS OGC API service"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=0.5.0",
+    "requests>=2.31.0"
+]
+
+[project.scripts]
+ags-boreholes-mcp = "server.main:mcp.run"
