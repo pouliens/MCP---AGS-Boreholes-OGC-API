@@ -183,19 +183,6 @@ PYTHONPATH=. python -c "import server.main; print('MCP loaded successfully')"
 | **stdio** | `python server/main.py --stdio` | Claude Desktop, VS Code MCP |
 | **HTTP** | `python server/main.py` | Cloudflare Tunnel, web access |
 
-### Cloudflare Tunnel Setup
-
-```bash
-# Install cloudflared
-# https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/
-
-# Run MCP in HTTP mode
-python server/main.py
-
-# Create tunnel (in another terminal)
-cloudflared tunnel --url http://127.0.0.1:8080/mcp
-```
-
 ---
 
 **Version**: 2.0.0 | **Updated**: 2025-08-14
